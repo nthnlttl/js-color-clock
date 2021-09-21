@@ -15,6 +15,11 @@
   flex-direction: column;
 }
 
+.clock-display {
+  align-self: stretch;
+  text-align: center;
+}
+
 .clock-progress-bar {
   background-color: #fff;
   height: .25rem;

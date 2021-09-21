@@ -2,34 +2,63 @@ var progressBar = document.querySelector('.clock-progress-bar');
 var display = document.querySelector('.clock-display');
 var clock = document.querySelector('clock');
 
+let mouseIsOver = false;
+
+display.addEventListener("mouseover", mouseEnter);
+display.addEventListener("mouseout", mouseLeave);
+
+function mouseEnter() {
+  mouseIsOver = true;
+}
+
+function mouseLeave() {
+  mouseIsOver = false;
+}
 
 function hexClock() {
     var time = new Date();
-    let hours = (time.getHours() % 12).toString();
-    let minutes = time.getMinutes().toString();
-    let seconds = time.getSeconds().toString();
+    let hours = (time.getHours() % 12);
+    let minutes = time.getMinutes();
+    let seconds = time.getSeconds();
 
-    if (hours.length < 2) {
+    if (hours < 10) {
         hours = '0' + hours;
     }
 
-    if (minutes.length < 2) {
+    if (minutes < 10) {
         minutes = '0' + minutes;
     }
 
-    if (seconds.length < 2) {
+    if (seconds < 10) {
         seconds = '0' + seconds;
     }
 
-    var displayStr = hours + ' : ' + minutes + ' : ' + seconds;
-    display.textContent = displayStr;
+    let hexColorStr = '#' + hours.toString(16) + minutes.toString(16) + seconds.toString(16);
+    let displayStr = hours + ' : ' + minutes + ' : ' + seconds;
 
-    var hexColorStr = '#' + hours + minutes + seconds;
+
+    if(mouseIsOver) {
+      // show the hex code
+      
+      display.textContent = hexColorStr;
+
+    } else {
+      // show the regular time
+      
+      display.textContent = displayStr;
+    }
+
+   
+
+    
     document.body.style.backgroundColor = hexColorStr;
-    console.log(hours + ":" + minutes + ":" + seconds);
-    console.log(seconds/60);
-    progressBar.style.width = '{seconds / 60 * 14}rem'
+    // console.log(hours + ":" + minutes + ":" + seconds);
+    // console.log(seconds/60);
+    
+    progressBar.style.width = `${seconds / 60 * 14}rem`;
+    
 }
+
 
 hexClock();
 setInterval(hexClock, 1000);
